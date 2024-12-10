@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PaniersController extends AbstractController
 {
-    #[Route('/paniers', name: 'app_paniers')]
-    public function index(): Response
+    #[Route('/panier', name: 'view_panier')]
+    public function panier(): Response
     {
-        return $this->render('paniers/index.html.twig', [
+        return $this->render('paniers/panier.html.twig', [
             'controller_name' => 'PanierController',
         ]);
     }
