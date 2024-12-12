@@ -19,7 +19,7 @@ class Utilisateur
     private ?string $Nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Prénom = null;
+    private ?string $Prenom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $Email = null;
@@ -27,18 +27,18 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $MotDePasse = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $Role = null;
 
     /**
-     * @var Collection<int, Panier>
+     * @var Collection<int, Commandes>
      */
-    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'Utilisateur')]
-    private Collection $paniers;
+    #[ORM\OneToMany(targetEntity: Commandes::class, mappedBy: 'Utilisateur')]
+    private Collection $commandes;
 
     public function __construct()
     {
-        $this->paniers = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,14 +58,14 @@ class Utilisateur
         return $this;
     }
 
-    public function getPrénom(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->Prénom;
+        return $this->Prenom;
     }
 
-    public function setPrénom(string $Prénom): static
+    public function setPrenom(string $Prenom): static
     {
-        $this->Prénom = $Prénom;
+        $this->Prenom = $Prenom;
 
         return $this;
     }
@@ -99,7 +99,7 @@ class Utilisateur
         return $this->Role;
     }
 
-    public function setRole(string $Role): static
+    public function setRole(?string $Role): static
     {
         $this->Role = $Role;
 
@@ -107,29 +107,29 @@ class Utilisateur
     }
 
     /**
-     * @return Collection<int, Panier>
+     * @return Collection<int, Commandes>
      */
-    public function getPaniers(): Collection
+    public function getCommandes(): Collection
     {
-        return $this->paniers;
+        return $this->commandes;
     }
 
-    public function addPanier(Panier $panier): static
+    public function addCommande(Commandes $commande): static
     {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers->add($panier);
-            $panier->setUtilisateur($this);
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removePanier(Panier $panier): static
+    public function removeCommande(Commandes $commande): static
     {
-        if ($this->paniers->removeElement($panier)) {
+        if ($this->commandes->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($panier->getUtilisateur() === $this) {
-                $panier->setUtilisateur(null);
+            if ($commande->getUtilisateur() === $this) {
+                $commande->setUtilisateur(null);
             }
         }
 

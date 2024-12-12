@@ -15,15 +15,10 @@ class ContenuPanier
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'contenuPaniers')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Produit $Produit = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contenuPaniers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Panier $Panier = null;
-
-    #[ORM\Column]
-    private ?int $Quantité = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $Quantite = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $Date = null;
@@ -45,26 +40,14 @@ class ContenuPanier
         return $this;
     }
 
-    public function getPanier(): ?Panier
+    public function getQuantite(): ?int
     {
-        return $this->Panier;
+        return $this->Quantite;
     }
 
-    public function setPanier(?Panier $Panier): static
+    public function setQuantite(?int $Quantite): static
     {
-        $this->Panier = $Panier;
-
-        return $this;
-    }
-
-    public function getQuantité(): ?int
-    {
-        return $this->Quantité;
-    }
-
-    public function setQuantité(int $Quantité): static
-    {
-        $this->Quantité = $Quantité;
+        $this->Quantite = $Quantite;
 
         return $this;
     }
