@@ -25,11 +25,11 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ utilisateur.role ? utilisateur.role|json_encode : 'user' }}</td>
+                <td>{{ utilisateur.roles ? utilisateur.roles|json_encode : 'user' }}</td>
             </tr>
             <tr>
                 <th>Password</th>
-                <td>{{ utilisateur.motdepasse }}</td>
+                <td>{{ utilisateur.password }}</td>
             </tr>
         </tbody>
     </table>

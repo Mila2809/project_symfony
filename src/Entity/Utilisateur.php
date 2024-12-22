@@ -3,166 +3,137 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-#[UniqueEntity('Email')]
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 1,
-        max: 255,
-        minMessage: 'The name must be at least {{ limit }} characters long',
-        maxMessage: 'The name cannot be longer than {{ limit }} characters',
-    )]
-    private ?string $Nom = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 1,
-        max: 255,
-        minMessage: 'The firstname must be at least {{ limit }} characters long',
-        maxMessage: 'The firstname cannot be longer than {{ limit }} characters',
-    )]
-    private ?string $Prenom = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 1,
-        max: 255,
-        minMessage: 'The email must be at least {{ limit }} characters long',
-        maxMessage: 'The email cannot be longer than {{ limit }} characters',
-    )]
-    private ?string $Email = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 1,
-        max: 255,
-        minMessage: 'The password must be at least {{ limit }} characters long',
-        maxMessage: 'The password cannot be longer than {{ limit }} characters',
-    )]
-    private ?string $MotDePasse = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Role = null;
+    #[ORM\Column(length: 180)]
+    private ?string $email = null;
 
     /**
-     * @var Collection<int, Commandes>
+     * @var list<string> The user roles
      */
-    #[ORM\OneToMany(targetEntity: Commandes::class, mappedBy: 'Utilisateur')]
-    private Collection $commandes;
+    #[ORM\Column]
+    private array $roles = [];
 
-    public function __construct()
-    {
-        $this->commandes = new ArrayCollection();
-    }
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getEmail(): ?string
     {
-        return $this->Nom;
+        return $this->email;
     }
 
-    public function setNom(string $Nom): static
+    public function setEmail(string $email): static
     {
-        $this->Nom = $Nom;
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
 
     public function getPrenom(): ?string
     {
-        return $this->Prenom;
+        return $this->prenom;
     }
 
-    public function setPrenom(string $Prenom): static
+    public function setPrenom(string $prenom): static
     {
-        $this->Prenom = $Prenom;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->Email;
-    }
-
-    public function setEmail(string $Email): static
-    {
-        $this->Email = $Email;
-
-        return $this;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->MotDePasse;
-    }
-
-    public function setMotDePasse(string $MotDePasse): static
-    {
-        $this->MotDePasse = $MotDePasse;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->Role;
-    }
-
-    public function setRole(?string $Role): static
-    {
-        $this->Role = $Role;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commandes $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getUtilisateur() === $this) {
-                $commande->setUtilisateur(null);
-            }
-        }
+        $this->prenom = $prenom;
 
         return $this;
     }
