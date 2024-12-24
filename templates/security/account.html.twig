@@ -15,8 +15,15 @@
             <p>Email : {{ app.user.userIdentifier }}</p>
             <p>Mot de Passe : {{ app.user.password }}</p>
             <p>Date de creation : {{ app.user.createdAt.format('Y-m-d H:i:s') }}</p>
-            <p>Roles : {{ app.user.roles[0] }}</p>
-            <a href="{{ path('app_logout') }}">Logout</a>
+            {% for roles in app.user.roles %}
+                <p>Roles : {{ roles }}</p>
+            {% endfor %}
+
+            <h2>Log out</h2>
+            <a href="{{ path('app_logout') }}"><button>Logout</button></a>
+
+            <h2>Edit Profil</h2>
+            {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
         {% else %}
             <form method="post">
                 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
