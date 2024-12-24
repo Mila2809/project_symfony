@@ -14,12 +14,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class ProduitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom')
+            ->add('Nom', TextType::class, [
+                'attr' => [
+                    'class' => 'my-class'
+                ]
+            ])
+            // ->add('Nom')
             ->add('Description')
             ->add('Prix')
             ->add('Stock')
