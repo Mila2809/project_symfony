@@ -13,8 +13,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login' )]
-    public function login(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route(path: '/account', name: 'app_account' )]
+    public function account(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -33,11 +33,11 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('security/login.html.twig', [
+        return $this->render('security/account.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'utilisateur' => $utilisateur,
             'form' => $form,
+            'utilisateur' => $utilisateur,
         ]);
     }
 

@@ -18,7 +18,7 @@ class UtilisateurType extends AbstractType
             ->add('Prenom')
             ->add('Email', EmailType::class)
             ->add('Password')
-            ->add('save', SubmitType::class, ['label' => 'Créer utilisateur'])
+            ->add('save', SubmitType::class, ['label' => 'Confirmer'])
         ;
     }
 
