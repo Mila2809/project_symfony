@@ -26,7 +26,7 @@
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.stock }}</td>
                 <td><img src='{{ asset("uploads/" ~ produit.photo )}}'/><td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
+                    <a href="{{ path('app_produit_selected', {'id': produit.id}) }}">show</a>
                     {# <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a> #}
                 </td>
             </tr>

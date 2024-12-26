@@ -10,20 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[UniqueEntity('title')]
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 1,
-        max: 255,
-        minMessage: 'The title must be at least {{ limit }} characters long',
-        maxMessage: 'The title cannot be longer than {{ limit }} characters',
-    )]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
