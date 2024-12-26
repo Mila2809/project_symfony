@@ -2,9 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Commandes;
 use App\Entity\Produit;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +24,6 @@ class ProduitType extends AbstractType
                     'class' => 'my-class'
                 ]
             ])
-            // ->add('Nom')
             ->add('Description')
             ->add('Prix')
             ->add('Stock')
@@ -38,9 +35,9 @@ class ProduitType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'Photo/jpg',
-                            'Photo/jpeg',
-                            'Photo/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid Photo (jpg, jpeg, png)',
                     ]),

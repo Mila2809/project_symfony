@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}{# recup le nom du produit#}
+
+{% block body %}
+    <h1>Jsp</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ produit.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ produit.stock }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src='{{ asset("uploads/" ~ produit.photo )}}'/><td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button>panier</button>
+    <a href="{{ path('app_produit_all') }}">back to accueil</a>
+
+{% endblock %}

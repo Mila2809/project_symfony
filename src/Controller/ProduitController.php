@@ -23,41 +23,51 @@ class ProduitController extends AbstractController
         ]);
     }
     
-    #[Route('/{id}', name: 'app_produit_show')]
-    public function show(EntityManagerInterface $em, Request $request, Produit $produit): Response
+    #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
+    public function new(EntityManagerInterface $em, Request $request): Response
     {
-        // $produit = new Produit();
-        // $form = $this->createForm(ProduitType::class, $produit);
+        $produit = new Produit();
+        $form = $this->createForm(ProduitType::class, $produit);
 
-        // $form->handleRequest($request);
-        // if($form->isSubmitted() && $form->isValid()){
-        //                 /** @var UploadedFile $imageFile */
-        //                 $imageFile = $form->get('Photo')->getData();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+                        /** @var UploadedFile $imageFile */
+                        $imageFile = $form->get('Photo')->getData();
 
-        //                 if ($imageFile) {
-        //                     $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                        if ($imageFile) {
+                            $newFilename = uniqid().'.'.$imageFile->guessExtension();
             
-        //                     try {
-        //                         $imageFile->move(
-        //                             $this->getParameter('upload_directory'),
-        //                             $newFilename
-        //                         );
-        //                     } catch (FileException $e) {
-        //                         // ...
-        //                     }
+                            try {
+                                $imageFile->move(
+                                    $this->getParameter('upload_directory'),
+                                    $newFilename
+                                );
+                            } catch (FileException $e) {
+                                // ...
+                            }
             
-        //                     $produit->setPhoto($newFilename);
-        //                 }
-        //     $em->persist($produit);
-        //     $em->flush();
-        //     return $this->redirectToRoute('app_produit');
-        // }
+                            $produit->setPhoto($newFilename);
+                        }
+            $em->persist($produit);
+            $em->flush();
+            return $this->redirectToRoute('app_produit_all');
+        }
 
-        return $this->render('produit/index.html.twig', [
+        return $this->render('produit/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_produit_selected', methods: ['GET'])]
+    public function selected(Request $request, Produit $produit): Response
+    {
+
+        return $this->render('produit/selected.html.twig', [
             // 'controller_name' => 'ProduitController',
             'produit' => $produit
         ]);
     }
+
     #[Route('/delete/{id}', name: 'app_produit_delete')]
     public function delete(Request $request, EntityManagerInterface $em, produit $produit)
     {
