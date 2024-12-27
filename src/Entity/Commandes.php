@@ -19,7 +19,7 @@ class Commandes
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Utilisateur $Utilisateur = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $DateAchat = null;
 
     /**
