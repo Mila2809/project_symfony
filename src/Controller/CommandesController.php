@@ -22,8 +22,13 @@ class CommandesController extends AbstractController
         $user = $this->getUser();
         
         $commandes = new Commandes();
+        $panier = new ContenuPanier();
+
         $commandes->setUtilisateur($user);
+        // $commandes->addContenuPanier($panier);
         $commandesForm = $this->createForm(CommandesType::class, $commandes);
+
+        $panierForm = $this->createForm(ContenuPanierType::class, $panier);
 
         $commandesForm->handleRequest($request);
         if($commandesForm->isSubmitted()){
@@ -32,8 +37,6 @@ class CommandesController extends AbstractController
             return $this->redirectToRoute('app_commandes');
         }
 
-        $panier = new ContenuPanier();
-        $panierForm = $this->createForm(ContenuPanierType::class, $panier);
         
         $panierForm->handleRequest($request);
         if($panierForm->isSubmitted()){

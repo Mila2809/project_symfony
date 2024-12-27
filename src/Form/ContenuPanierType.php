@@ -16,15 +16,12 @@ class ContenuPanierType extends AbstractType
     {
         $builder
             ->add('Quantite')
-            ->add('Date', null, [
-                'widget' => 'single_text',
-            ])
             ->add('Produit', EntityType::class, [
                 'class' => Produit::class,
                 'choice_label' => 'id',
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Jsp comment je vais gérer ça'
+                'label' => 'JSP QUOI METTRE'
             ])
         ;
     }
