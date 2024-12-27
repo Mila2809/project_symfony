@@ -9,7 +9,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
+#[HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
@@ -138,31 +140,13 @@ class Produit
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
+    #[ORM\PostRemove]
+    #[ORM\PostUpdate]
+    public function deleteImage()
     {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commandes $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->addProduit($this);
+        if($this->Photo != null){
+            unlink(__DIR__.'/../../public/uploads/' . $this->Photo);
         }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removeProduit($this);
-        }
-
-        return $this;
+        return;
     }
 }

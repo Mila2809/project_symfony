@@ -77,4 +77,40 @@ class ProduitController extends AbstractController
         }
         return $this->redirectToRoute('app_produit_all');
     }
+
+    #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
+
+            
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('Photo')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                        $imageFile->move(
+                            $this->getParameter('upload_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {}
+        
+                    $produit->setPhoto($newFilename);
+                }
+                    $entityManager->flush();
+                // $em->flush();
+        
+                return $this->redirectToRoute('app_produit_selected', ['id' => $produit->getId()]);
+        }
+        
+            return $this->render('produit/edit.html.twig', [
+                'form' => $form->createView(),
+                'produit' => $produit,
+            ]);
+    }
 }
