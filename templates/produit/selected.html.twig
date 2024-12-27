@@ -37,4 +37,9 @@
     <button>panier</button>
     <a href="{{ path('app_produit_all') }}">back to accueil</a>
 
+    <form method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+        <input type="hidden" name="csrf" value="{{ csrf_token('delete' ~ produit.id) }}">
+        <button type="submit">Supprimer</button>
+    </form>
+
 {% endblock %}
