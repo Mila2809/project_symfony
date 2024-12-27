@@ -19,18 +19,18 @@ class Commandes
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Utilisateur $Utilisateur = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $DateAchat = null;
 
     /**
-     * @var Collection<int, Produit>
+     * @var Collection<int, ContenuPanier>
      */
-    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'commandes')]
-    private Collection $Produits;
+    #[ORM\ManyToMany(targetEntity: ContenuPanier::class, inversedBy: 'commandes')]
+    private Collection $ContenuPaniers;
 
     public function __construct()
     {
-        $this->Produits = new ArrayCollection();
+        $this->ContenuPaniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,25 +63,25 @@ class Commandes
     }
 
     /**
-     * @return Collection<int, Produit>
+     * @return Collection<int, ContenuPanier>
      */
-    public function getProduits(): Collection
+    public function getContenuPaniers(): Collection
     {
-        return $this->Produits;
+        return $this->ContenuPaniers;
     }
 
-    public function addProduit(Produit $produit): static
+    public function addContenuPanier(ContenuPanier $ContenuPanier): static
     {
-        if (!$this->Produits->contains($produit)) {
-            $this->Produits->add($produit);
+        if (!$this->ContenuPaniers->contains($ContenuPanier)) {
+            $this->ContenuPaniers->add($ContenuPanier);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): static
+    public function removeContenuPanier(ContenuPanier $ContenuPanier): static
     {
-        $this->Produits->removeElement($produit);
+        $this->ContenuPaniers->removeElement($ContenuPanier);
 
         return $this;
     }

@@ -43,8 +43,9 @@ class ProduitType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid Photo (jpg, jpeg, png)',
                     ]),
             ]])
-
-            ->add('save', SubmitType::class, ['label' => 'Create produit'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Create produit'
+            ])
         ;
     }
 

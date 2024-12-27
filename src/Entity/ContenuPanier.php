@@ -20,9 +20,6 @@ class ContenuPanier
     #[ORM\Column(nullable: true)]
     private ?int $Quantite = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $Date = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -48,18 +45,6 @@ class ContenuPanier
     public function setQuantite(?int $Quantite): static
     {
         $this->Quantite = $Quantite;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
-
-    public function setDate(\DateTimeInterface $Date): static
-    {
-        $this->Date = $Date;
 
         return $this;
     }

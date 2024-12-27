@@ -39,16 +39,9 @@ class Produit
     #[ORM\OneToMany(targetEntity: ContenuPanier::class, mappedBy: 'Produit')]
     private Collection $contenuPaniers;
 
-    /**
-     * @var Collection<int, Commandes>
-     */
-    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'Produits')]
-    private Collection $commandes;
-
     public function __construct()
     {
         $this->contenuPaniers = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
