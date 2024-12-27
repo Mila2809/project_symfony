@@ -5,14 +5,19 @@
 {% block body %}
 
 {% if app.user %}
-<h1>tkt t'es bien loggin<h1>
+<h1>tkt t'es bien loggin</h1>
 {% endif %}
 
-{{ form_start(form) }}
-{{ form_row(form.DateAchat) }}
-{{ form_row(form.Produits) }}
-{{ form_row(form.save) }}
-{{ form_end(form) }}
+<h2>Forme de Commandes</h2>
 
+{{ form_start(commandesForm) }}
+{{ form_row(commandesForm.DateAchat) }}
+{{ form_row(commandesForm.ContenuPaniers) }}
+{{ form_row(commandesForm.save) }}
+{{ form_end(commandesForm) }}
+
+<h2>Forme de ContenuPanier</h2>
+
+{{ form(panierForm) }}
 
 {% endblock %}
