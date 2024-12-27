@@ -14,8 +14,8 @@ class UtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom')
             ->add('Prenom')
+            ->add('Nom')
             ->add('Email', EmailType::class)
             ->add('Password')
             ->add('save', SubmitType::class, ['label' => 'Confirmer'])

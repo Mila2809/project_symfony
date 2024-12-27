@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CommandesController extends AbstractController
 {
     #[Route('/commandes', name: 'app_commandes', methods: ['GET', 'POST'])]
-    public function index(UtilisateurRepository $utilisateurRepository, EntityManagerInterface $em, Request $request): Response
+    public function index(EntityManagerInterface $em, Request $request): Response
     {   
         $user = $this->getUser();
         

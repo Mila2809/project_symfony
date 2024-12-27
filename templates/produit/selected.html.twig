@@ -30,7 +30,6 @@
         </tbody>
     </table>
 
-    <button>panier</button>
     <a href="{{ path('app_produit_all') }}">back to accueil</a>
 
     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-warning">Modifier</a>
@@ -40,6 +39,12 @@
         <button type="submit">Supprimer</button>
     </form>
 
-    
+    <h2>Forme de Commandes</h2>
+
+    {{ form(commandesForm) }}
+
+    <h2>Forme de ContenuPanier</h2>
+
+    {{ form(panierForm) }}
 
 {% endblock %}

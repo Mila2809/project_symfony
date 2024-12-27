@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Commandes;
-use App\Entity\ContenuPanier;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,14 +24,10 @@ class CommandesType extends AbstractType
             ->add('Utilisateur', EntityType::class, [
                 'class' => Utilisateur::class,
                 'choice_label' => 'id',
-            ])
-            ->add('ContenuPaniers', EntityType::class, [
-                'class' => ContenuPanier::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+                'disabled' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'CEST LA MERDE'
+                'label' => 'AIDEZ MOI'
             ])
         ;
     }

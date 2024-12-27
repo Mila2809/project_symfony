@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commandes;
+use App\Entity\ContenuPanier;
 use App\Entity\Produit;
+use App\Form\CommandesType;
+use App\Form\ContenuPanierType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,23 +35,23 @@ class ProduitController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-                        /** @var UploadedFile $imageFile */
-                        $imageFile = $form->get('Photo')->getData();
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('Photo')->getData();
 
-                        if ($imageFile) {
-                            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-            
-                            try {
-                                $imageFile->move(
-                                    $this->getParameter('upload_directory'),
-                                    $newFilename
-                                );
-                            } catch (FileException $e) {
-                                // ...
-                            }
-            
-                            $produit->setPhoto($newFilename);
-                        }
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // METTRE UN MESSAGE D'ERREUR
+                }
+
+                $produit->setPhoto($newFilename);
+            }
             $em->persist($produit);
             $em->flush();
             return $this->redirectToRoute('app_produit_all');
@@ -58,13 +62,43 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_selected', methods: ['GET'])]
-    public function selected(Request $request, Produit $produit): Response
+    #[Route('/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
+    public function selected(EntityManagerInterface $em, Request $request, Produit $produit): Response
     {
+
+        $user = $this->getUser();
+        
+        $commandes = new Commandes();
+        $panier = new ContenuPanier();
+
+        $commandes->setUtilisateur($user);
+        $panier->setProduit($produit);
+        $commandesForm = $this->createForm(CommandesType::class, $commandes);
+
+        $panierForm = $this->createForm(ContenuPanierType::class, $panier);
+
+        $commandesForm->handleRequest($request);
+        if($commandesForm->isSubmitted()){
+            $em->persist($commandes);
+            $em->flush();
+            return $this->redirectToRoute('app_commandes');
+        }
+
+        $panierForm->handleRequest($request);
+        if($panierForm->isSubmitted()){
+            $em->persist($panier);
+            $em->flush();
+            return $this->redirectToRoute('app_commandes');
+        }
+
+        $commandes = $em->getRepository(ContenuPanier::class)->findAll();
+        $panier = $em->getRepository(ContenuPanier::class)->findAll();
 
         return $this->render('produit/selected.html.twig', [
             // 'controller_name' => 'ProduitController',
-            'produit' => $produit
+            'produit' => $produit,
+            'commandesForm' => $commandesForm,
+            'panierForm' => $panierForm,
         ]);
     }
 
@@ -86,7 +120,6 @@ class ProduitController extends AbstractController
 
             
         if ($form->isSubmitted() && $form->isValid()) {
-            
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('Photo')->getData();
 
@@ -94,20 +127,18 @@ class ProduitController extends AbstractController
                 $newFilename = uniqid().'.'.$imageFile->guessExtension();
 
                 try {
-                        $imageFile->move(
-                            $this->getParameter('upload_directory'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {}
-        
-                    $produit->setPhoto($newFilename);
-                }
-                    $entityManager->flush();
-                // $em->flush();
-        
-                return $this->redirectToRoute('app_produit_selected', ['id' => $produit->getId()]);
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {}
+                
+                $produit->setPhoto($newFilename);
+            }
+
+            $entityManager->flush();
+            return $this->redirectToRoute('app_produit_selected', ['id' => $produit->getId()]);
         }
-        
             return $this->render('produit/edit.html.twig', [
                 'form' => $form->createView(),
                 'produit' => $produit,
