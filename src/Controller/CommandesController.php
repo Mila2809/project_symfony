@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Commandes;
+use App\Entity\ContenuPanier;
 use App\Entity\Utilisateur;
 use App\Form\CommandesType;
+use App\Form\ContenuPanierType;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,19 +23,30 @@ class CommandesController extends AbstractController
         
         $commandes = new Commandes();
         $commandes->setUtilisateur($user);
-        $form = $this->createForm(CommandesType::class, $commandes);
+        $commandesForm = $this->createForm(CommandesType::class, $commandes);
 
-        $form->handleRequest($request);
-        if($form->isSubmitted()){
+        $commandesForm->handleRequest($request);
+        if($commandesForm->isSubmitted()){
             $em->persist($commandes);
             $em->flush();
             return $this->redirectToRoute('app_commandes');
         }
 
-        $commandes = $em->getRepository(Commandes::class)->findAll();
+        $panier = new ContenuPanier();
+        $panierForm = $this->createForm(ContenuPanierType::class, $panier);
+        
+        $panierForm->handleRequest($request);
+        if($panierForm->isSubmitted()){
+            $em->persist($panier);
+            $em->flush();
+            return $this->redirectToRoute('app_commandes');
+        }
+
+        $commandes = $em->getRepository(ContenuPanier::class)->findAll();
+        $panier = $em->getRepository(ContenuPanier::class)->findAll();
         return $this->render('commandes/index.html.twig', [
-            'commandes' => $commandes,
-            'form' => $form,
+            'commandesForm' => $commandesForm,
+            'panierForm' => $panierForm,
         ]);
     }
 }

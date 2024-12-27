@@ -2,34 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Commandes;
 use App\Entity\ContenuPanier;
-use App\Entity\Utilisateur;
+use App\Entity\Produit;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommandesType extends AbstractType
+class ContenuPanierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('DateAchat', null, [
+            ->add('Quantite')
+            ->add('Date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('Utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
+            ->add('Produit', EntityType::class, [
+                'class' => Produit::class,
                 'choice_label' => 'id',
-            ])
-            ->add('ContenuPaniers', EntityType::class, [
-                'class' => ContenuPanier::class,
-                'choice_label' => 'id',
-                'multiple' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Ajouter au panier'
+                'label' => 'Jsp comment je vais gérer ça'
             ])
         ;
     }
@@ -37,7 +32,7 @@ class CommandesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Commandes::class,
+            'data_class' => ContenuPanier::class,
         ]);
     }
 }
