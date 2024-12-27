@@ -29,7 +29,7 @@ class CommandesType extends AbstractType
                 'multiple' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Ajouter au panier'
+                'label' => 'CEST LA MERDE'
             ])
         ;
     }
