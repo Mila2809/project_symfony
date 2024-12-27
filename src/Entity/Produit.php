@@ -39,16 +39,9 @@ class Produit
     #[ORM\OneToMany(targetEntity: ContenuPanier::class, mappedBy: 'Produit')]
     private Collection $contenuPaniers;
 
-    /**
-     * @var Collection<int, Commandes>
-     */
-    #[ORM\ManyToMany(targetEntity: Commandes::class, mappedBy: 'Produits')]
-    private Collection $commandes;
-
     public function __construct()
     {
         $this->contenuPaniers = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,33 +134,6 @@ class Produit
             if ($contenuPanier->getProduit() === $this) {
                 $contenuPanier->setProduit(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commandes $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removeProduit($this);
         }
 
         return $this;
