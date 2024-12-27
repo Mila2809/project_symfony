@@ -9,7 +9,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
+#[HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
@@ -137,5 +139,14 @@ class Produit
         }
 
         return $this;
+    }
+    #[ORM\PostRemove]
+    #[ORM\PostUpdate]
+    public function deleteImage()
+    {
+        if($this->Photo != null){
+            unlink(__DIR__.'/../../public/uploads/' . $this->Photo);
+        }
+        return;
     }
 }
