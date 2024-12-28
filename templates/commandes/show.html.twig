@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Commandes{% endblock %}
+
+{% block body %}
+    <h1>Vos Commandes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commande</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in panier %}
+            <tr>
+                <td>{{ produit.commandes.id }}</td>
+                <td>{{ produit.produit.nom }}</td>
+                <td>{{ produit.quantite }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

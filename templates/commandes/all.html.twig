@@ -17,9 +17,9 @@
             <tr>
                 <td>{{ commande.id }}</td>
                 <td>{{ commande.dateachat ? commande.dateachat|json_encode : 'Panier non payé' }}</td>
-                {# <td>
-                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">Voir détail</a>
-                </td> #}
+                <td>
+                    <a href="{{ path('app_commandes_show', {'id': commande.id}) }}">Voir détail</a>
+                </td>
             </tr>
         {% else %}
             <tr>
