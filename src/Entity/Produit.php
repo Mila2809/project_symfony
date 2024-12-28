@@ -142,7 +142,6 @@ class Produit
     }
     
     #[ORM\PostRemove]
-    #[ORM\PostUpdate]
     public function deleteImage()
     {
         if($this->Photo != null){
