@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Commandes;
 use App\Entity\ContenuPanier;
 use App\Entity\Produit;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -19,9 +20,15 @@ class ContenuPanierType extends AbstractType
             ->add('Produit', EntityType::class, [
                 'class' => Produit::class,
                 'choice_label' => 'id',
+                'disabled' => true,
+            ])
+            ->add('commandes', EntityType::class, [
+                'class' => Commandes::class,
+                'choice_label' => 'id',
+                'disabled' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'JSP QUOI METTRE'
+                'label' => 'Ajouter au panier'
             ])
         ;
     }

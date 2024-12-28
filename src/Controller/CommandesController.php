@@ -4,52 +4,51 @@ namespace App\Controller;
 
 use App\Entity\Commandes;
 use App\Entity\ContenuPanier;
-use App\Entity\Utilisateur;
 use App\Form\CommandesType;
-use App\Form\ContenuPanierType;
-use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CommandesController extends AbstractController
+#[Route('/commandes')]
+final class CommandesController extends AbstractController
 {
-    #[Route('/commandes', name: 'app_commandes', methods: ['GET', 'POST'])]
-    public function index(UtilisateurRepository $utilisateurRepository, EntityManagerInterface $em, Request $request): Response
-    {   
+    #[Route('/all', name: 'app_commandes_all', methods: ['GET'])]
+    public function index(EntityManagerInterface $em): Response
+    {
         $user = $this->getUser();
+        $commandes = $em->getRepository(Commandes::class)->findBy([
+            'Utilisateur' => $user,
+        ]);
+
+        return $this->render('commandes/all.html.twig', [
+            'commandes' => $commandes,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_commandes_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, EntityManagerInterface $em, Commandes $commandes): Response
+    {
+        $panier = $em->getRepository(ContenuPanier::class)->findBy([
+            'commandes' => $commandes,
+        ]);
+
+        $form = $this->createForm(CommandesType::class, $commandes);
+        $form->handleRequest($request);
+
         
-        $commandes = new Commandes();
-        $panier = new ContenuPanier();
-
-        $commandes->setUtilisateur($user);
-        // $commandes->addContenuPanier($panier);
-        $commandesForm = $this->createForm(CommandesType::class, $commandes);
-
-        $panierForm = $this->createForm(ContenuPanierType::class, $panier);
-
-        $commandesForm->handleRequest($request);
-        if($commandesForm->isSubmitted()){
-            $em->persist($commandes);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commandes->setDateAchat(new \DateTime());
             $em->flush();
-            return $this->redirectToRoute('app_commandes');
+
+            return $this->redirectToRoute('app_commandes_all');
         }
 
-        
-        $panierForm->handleRequest($request);
-        if($panierForm->isSubmitted()){
-            $em->persist($panier);
-            $em->flush();
-            return $this->redirectToRoute('app_commandes');
-        }
-
-        $commandes = $em->getRepository(ContenuPanier::class)->findAll();
-        $panier = $em->getRepository(ContenuPanier::class)->findAll();
-        return $this->render('commandes/index.html.twig', [
-            'commandesForm' => $commandesForm,
-            'panierForm' => $panierForm,
+        return $this->render('commandes/show.html.twig', [
+            'panier' => $panier,
+            'commandes' => $commandes,
+            'form' => $form,
         ]);
     }
 }

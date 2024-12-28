@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Modifier le produit</h1>
 
-{{ form(form) }}
+    {{ form(form) }}
 
     <a href="{{ path('app_produit_selected', {'id': produit.id}) }}">Annuler</a>
 {% endblock %}

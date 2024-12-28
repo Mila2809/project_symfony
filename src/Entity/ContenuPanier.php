@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ContenuPanierRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContenuPanierRepository::class)]
@@ -19,6 +18,9 @@ class ContenuPanier
 
     #[ORM\Column(nullable: true)]
     private ?int $Quantite = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ContenuPanier')]
+    private ?Commandes $commandes = null;
 
     public function getId(): ?int
     {
@@ -45,6 +47,18 @@ class ContenuPanier
     public function setQuantite(?int $Quantite): static
     {
         $this->Quantite = $Quantite;
+
+        return $this;
+    }
+
+    public function getCommandes(): ?Commandes
+    {
+        return $this->commandes;
+    }
+
+    public function setCommandes(?Commandes $commandes): static
+    {
+        $this->commandes = $commandes;
 
         return $this;
     }
