@@ -98,11 +98,25 @@ class ProduitController extends AbstractController
                 $em->persist($userPanier);
                 $em->flush();
             }
-            $panier->setProduit($produit);
-            $panier->setCommandes($userPanier);
-            $em->persist($panier);
-            $em->flush();
-            return $this->redirectToRoute('app_produit_all');
+
+            $produitPanier = $em->getRepository(ContenuPanier::class)->findOneBy([
+                'commandes' => $userPanier,
+                'Produit' => $produit,
+            ]);
+
+            if ($produitPanier){
+                $newQuantity = $produitPanier->getQuantite() + $panier->getQuantite();
+                $panier->setQuantite($newQuantity);
+                $em->remove($produitPanier);
+                $em->persist($panier);
+                $em->flush();
+            } else {
+                $panier->setProduit($produit);
+                $panier->setCommandes($userPanier);
+                $em->persist($panier);
+                $em->flush();
+            }
+                return $this->redirectToRoute('app_produit_all');
         }
 
         $commandes = $em->getRepository(ContenuPanier::class)->findAll();
