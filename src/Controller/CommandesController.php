@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Commandes;
 use App\Entity\ContenuPanier;
-use App\Entity\Produit;
 use App\Form\CommandesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
