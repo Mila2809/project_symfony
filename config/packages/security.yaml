@@ -40,7 +40,6 @@ security:
         - { path: ^/produit/all, roles: [] }
         - { path: ^/produit/show/, roles: [] }
         - { path: ^/produit/, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
-        - { path: ^/commandes, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
 
 when@test:
     security:

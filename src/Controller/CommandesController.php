@@ -34,17 +34,17 @@ final class CommandesController extends AbstractController
             'commandes' => $commandes,
         ]);
 
-        $stock = [];
-        $quantite = [];
-        foreach ($panier as $produit) {
-            $quantite[] = $produit->getQuantite();
-            $stock[] = $produit->getProduit()->getStock();
-        }
-
         $form = $this->createForm(CommandesType::class, $commandes);
         $form->handleRequest($request);
 
-        
+        $total = 0;
+        foreach ($panier as $produit) {
+            $prix = $produit->getProduit()->getPrix();
+            $quantite = $produit->getQuantite();
+            $totalProduit = $prix * $quantite;
+            $total = $total + $totalProduit;
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($panier as $contenuDuPanier) {
                 $quantite = $contenuDuPanier->getQuantite();
@@ -63,6 +63,17 @@ final class CommandesController extends AbstractController
             'panier' => $panier,
             'commandes' => $commandes,
             'form' => $form,
+            'total' => $total,
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'app_commandes_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $em, ContenuPanier $contenuPanier): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $contenuPanier->getId(), $request->request->get('csrf'))) {
+            $em->remove($contenuPanier);
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_commandes_all');
     }
 }
