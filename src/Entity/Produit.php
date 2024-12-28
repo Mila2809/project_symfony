@@ -140,6 +140,7 @@ class Produit
 
         return $this;
     }
+    
     #[ORM\PostRemove]
     #[ORM\PostUpdate]
     public function deleteImage()

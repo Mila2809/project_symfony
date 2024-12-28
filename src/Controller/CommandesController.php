@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commandes;
 use App\Entity\ContenuPanier;
+use App\Entity\Produit;
 use App\Form\CommandesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,11 +35,25 @@ final class CommandesController extends AbstractController
             'commandes' => $commandes,
         ]);
 
+        $stock = [];
+        $quantite = [];
+        foreach ($panier as $produit) {
+            $quantite[] = $produit->getQuantite();
+            $stock[] = $produit->getProduit()->getStock();
+        }
+
         $form = $this->createForm(CommandesType::class, $commandes);
         $form->handleRequest($request);
 
         
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($panier as $contenuDuPanier) {
+                $quantite = $contenuDuPanier->getQuantite();
+                $stock = $contenuDuPanier->getProduit()->getStock();
+                $newStock = $stock - $quantite;
+                $contenuDuPanier->getProduit()->setStock($newStock);
+            }
+            
             $commandes->setDateAchat(new \DateTime());
             $em->flush();
 
