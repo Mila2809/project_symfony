@@ -91,14 +91,14 @@ class ProduitController extends AbstractController
         if($commandesForm->isSubmitted()){
             $em->persist($commandes);
             $em->flush();
-            return $this->redirectToRoute('app_commandes');
+            return $this->redirectToRoute('app_produit/all');
         }
 
         $panierForm->handleRequest($request);
         if($panierForm->isSubmitted()){
             $em->persist($panier);
             $em->flush();
-            return $this->redirectToRoute('app_commandes');
+            return $this->redirectToRoute('app_produit/all');
         }
 
         $commandes = $em->getRepository(ContenuPanier::class)->findAll();
