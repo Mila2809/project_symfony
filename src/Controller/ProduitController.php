@@ -73,32 +73,36 @@ class ProduitController extends AbstractController
 
         $userPanier = $em->getRepository(Commandes::class)->findOneBy([
             'Utilisateur' => $user,
+            'DateAchat' => null,
         ]);
-
-        if ($userPanier) {
-            // Handle the case where the Commandes already exists
-            // For example, you might want to update it or show a message to the user
-        }
 
         $commandes->setUtilisateur($user);
         $panier->setProduit($produit);
         $panier->setCommandes($userPanier);
-        $commandesForm = $this->createForm(CommandesType::class, $commandes);
 
+        $commandesForm = $this->createForm(CommandesType::class, $commandes);
         $panierForm = $this->createForm(ContenuPanierType::class, $panier);
 
         $commandesForm->handleRequest($request);
         if($commandesForm->isSubmitted()){
             $em->persist($commandes);
             $em->flush();
-            return $this->redirectToRoute('app_produit/all');
+            return $this->redirectToRoute('app_produit_all');
         }
 
         $panierForm->handleRequest($request);
         if($panierForm->isSubmitted()){
+            if (!$userPanier) {
+                $userPanier = new Commandes();
+                $userPanier->setUtilisateur($user);
+                $em->persist($userPanier);
+                $em->flush();
+            }
+            $panier->setProduit($produit);
+            $panier->setCommandes($userPanier);
             $em->persist($panier);
             $em->flush();
-            return $this->redirectToRoute('app_produit/all');
+            return $this->redirectToRoute('app_produit_all');
         }
 
         $commandes = $em->getRepository(ContenuPanier::class)->findAll();
@@ -106,7 +110,6 @@ class ProduitController extends AbstractController
 
         return $this->render('produit/selected.html.twig', [
             'produit' => $produit,
-            'commandesForm' => $commandesForm,
             'panierForm' => $panierForm,
         ]);
     }

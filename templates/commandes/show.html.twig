@@ -23,4 +23,11 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% if commandes.dateachat %}
+        <p>Cette commande a été payé le {{ commandes.dateachat.format('d-m-Y') }} à {{ commandes.dateachat.format('H:i') }} .</p>
+    {% else %}
+        {{ form(form) }}
+    {% endif %}
+
 {% endblock %}

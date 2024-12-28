@@ -28,7 +28,7 @@ class ContenuPanierType extends AbstractType
                 'disabled' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'JSP CE QUE JE FAIS'
+                'label' => 'Ajouter au panier'
             ])
         ;
     }

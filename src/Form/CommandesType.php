@@ -28,7 +28,7 @@ class CommandesType extends AbstractType
                 'disabled' => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'AIDEZ MOI'
+                'label' => 'Payer le panier'
             ])
         ;
     }
