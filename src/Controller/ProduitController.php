@@ -135,6 +135,8 @@ class ProduitController extends AbstractController
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('Photo')->getData();
 
+            unlink(__DIR__ . '/../../public/uploads/' . $produit->getPhoto());
+
             if ($imageFile) {
                 $newFilename = uniqid().'.'.$imageFile->guessExtension();
 
