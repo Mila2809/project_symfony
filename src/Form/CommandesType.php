@@ -18,6 +18,7 @@ class CommandesType extends AbstractType
         $builder
             ->add('DateAchat', DateType::class, [
                 'widget' => 'single_text',
+                'disabled' => true,
                 'required' => false,
                 'empty_data'  => null,
             ])

@@ -71,8 +71,18 @@ class ProduitController extends AbstractController
         $commandes = new Commandes();
         $panier = new ContenuPanier();
 
+        $userPanier = $em->getRepository(Commandes::class)->findOneBy([
+            'Utilisateur' => $user,
+        ]);
+
+        if ($userPanier) {
+            // Handle the case where the Commandes already exists
+            // For example, you might want to update it or show a message to the user
+        }
+
         $commandes->setUtilisateur($user);
         $panier->setProduit($produit);
+        $panier->setCommandes($userPanier);
         $commandesForm = $this->createForm(CommandesType::class, $commandes);
 
         $panierForm = $this->createForm(ContenuPanierType::class, $panier);
@@ -95,7 +105,6 @@ class ProduitController extends AbstractController
         $panier = $em->getRepository(ContenuPanier::class)->findAll();
 
         return $this->render('produit/selected.html.twig', [
-            // 'controller_name' => 'ProduitController',
             'produit' => $produit,
             'commandesForm' => $commandesForm,
             'panierForm' => $panierForm,

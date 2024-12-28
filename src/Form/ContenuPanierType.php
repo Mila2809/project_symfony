@@ -25,6 +25,7 @@ class ContenuPanierType extends AbstractType
             ->add('commandes', EntityType::class, [
                 'class' => Commandes::class,
                 'choice_label' => 'id',
+                'disabled' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'JSP CE QUE JE FAIS'
