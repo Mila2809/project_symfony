@@ -62,7 +62,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
+    #[Route('/show/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
     public function selected(EntityManagerInterface $em, Request $request, Produit $produit): Response
     {
 
@@ -124,7 +124,7 @@ class ProduitController extends AbstractController
         return $this->redirectToRoute('app_produit_all');
     }
 
-    #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
