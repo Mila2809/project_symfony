@@ -41,6 +41,7 @@ security:
         - { path: ^/produit/show/, roles: [] }
         - { path: ^/produit/, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/commandes/, roles: [] }
+        - { path: ^/superadmin, roles: [ROLE_SUPER_ADMIN] }
 
 when@test:
     security:

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SUPER ADMIN{% endblock %}
+
+{% block body %}
+    <h1>PAGE SUPER ADMIN SUPER SECRETE</h1>
+
+    <h2>Liste des utilisateur</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Création du compte</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.email }}</td>
+                <td>{{ utilisateur.roles ? utilisateur.roles[0]|json_encode : '' }}</td>
+                <td>{{ utilisateur.createdAt.format('d m Y') }} - {{ utilisateur.createdAt.format('H:i') }}</td>
+                <td>
+                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
+                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Liste des paniers en cours</h2>
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Identifiant du panier</th>
+                    <th>Utilisateur</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for panier in paniers %}
+                <tr>
+                    <td>{{ panier.id }}</td>
+                    <td>{{ panier.utilisateur.prenom }} {{ panier.utilisateur.nom }}</td>
+                    <td>
+                        <a href="{{ path('app_commandes_show', {'id': panier.id}) }}">Voir détail</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

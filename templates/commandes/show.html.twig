@@ -3,7 +3,7 @@
 {% block title %}Commande{% endblock %}
 
 {% block body %}
-    {% if app.user.id == commandes.utilisateur.id %}
+    {% if app.user.id == commandes.utilisateur.id or is_granted('ROLE_SUPER_ADMIN') %}
         <h1>Votre Commande</h1>
 
         <table class="table">
