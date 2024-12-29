@@ -1,0 +1,147 @@
+* {
+    margin: 0%;
+    padding: 0%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("/uploads/fondB.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: #ffffff54;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px;
+}
+
+header img {
+    width: 150px;
+}
+
+header nav {
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.3em;
+    margin-right: 15px;
+    width: 550px;
+    display: flex;
+    justify-content: space-around;
+}
+
+header a {
+    text-decoration: none;
+}
+
+label {
+    display: none;
+}
+
+input {
+    display: none;
+}
+
+select {
+    display: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    backdrop-filter: blur(2rem);
+}
+
+main h1 {
+    margin: 1rem 0;
+}
+
+main div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+footer .reseaux {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+footer i {
+    font-size: 35px;
+    color: #003666;
+}
+.fa-twitter,
+.fa-tiktok,
+.fa-youtube,
+.fa-facebook,
+.fa-instagram {
+    transition: color 0.3s ease;
+}
+a:hover .fa-twitter,
+a:hover .fa-tiktok,
+a:hover .fa-youtube,
+a:hover .fa-facebook,
+a:hover .fa-instagram {
+    color: #00579d;
+}
+footer h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0px 15px 0px;
+}
+footer .p1 {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+footer .p2 {
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+}
+
+footer .fin {
+    width: 250px;
+}
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff54;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+}
+footer hr {
+    display: flex;
+    justify-content: center;
+    height: 1px;
+    background-color: rgb(216, 226, 232);
+    width: 90%;
+    border: none;
+    margin-top: 20px;
+}
