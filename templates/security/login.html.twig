@@ -3,6 +3,8 @@
 {% block title %}Log in{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+    <div class="groupe">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -22,4 +24,5 @@
             </button>
         </form>
         <h2>Don't have an account ? <a href="{{ path('app_utilisateur_new')}}">Create one here</a></h2>
+        </div>
 {% endblock %}

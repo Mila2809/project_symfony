@@ -1,31 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Account{% endblock %}
+{% block title %}Mon Compte{% endblock %}
 
 {% block body %}
+<link rel="stylesheet" href="{{ asset('styles/account.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/all.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<header>
+        <img src="/uploads/logo.png" alt="">
+        <nav class="navigation">
+            <a href="{{ path('app_utilisateur_index') }}" class="nav-link">Accueil</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">Panier</a>
+            <a href="{{ path('app_account') }}" class="nav-link">Compte</a>
+        </nav>
+</header>
+    <div class="container">
+    {% if app.user %}
+        <div class="account-info">
+            <h1 class="titre">Bienvenue, {{ app.user.prenom }} {{ app.user.nom }}</h1>
+            <hr>
+            <div class="groupe">
+                <div class="info-item">
+                    <strong>Prénom :</strong> {{ app.user.prenom }}
+                </div>
+                <div class="info-item">
+                    <strong>Nom :</strong> {{ app.user.nom }}
+                </div>
+                <div class="info-item">
+                    <strong>Email :</strong> {{ app.user.userIdentifier }}
+                </div>
+                <div class="info-item">
+                    <strong>Date de création :</strong> {{ app.user.createdAt.format('Y-m-d H:i:s') }}
+                </div>
+                <a class="btn" href="{{ path('app_logout') }}"><button>Se déconnecter</button></a>
+            </div>
+        </div>
 
-    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
-    <div class="groupe">
-      {% if app.user %}
-
-        <h1>Welcome {{ app.user.prenom }} {{ app.user.nom }}</h1>
-        <p>Id : {{ app.user.id }}</p>
-        <p>Prenom : {{ app.user.prenom }}</p>
-        <p>Nom : {{ app.user.nom }}</p>
-        <p>Email : {{ app.user.userIdentifier }}</p>
-        <p>Mot de Passe : {{ app.user.password }}</p>
-        <p>Date de creation : {{ app.user.createdAt.format('Y-m-d H:i:s') }}</p>
-        {% for roles in app.user.roles %}
-            <p>Roles : {{ roles }}</p>
-        {% endfor %}
-
-        <h2>Log out</h2>
-        <a href="{{ path('app_logout') }}"><button>Logout</button></a>
-
-        <h2>Edit Profil</h2>
-        {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
-
-      {% endif %}
+        <div class="actions">
+            <h2 class="titre">Modifier mon profil</h2>
+            <hr>
+            <div class="groupe">
+                {{ include('utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
+        </div>
+    {% endif %}
     </div>
-
+<footer>
+            <div class="reseaux">
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-tiktok"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <hr/>
+            
+            <h3><img class="fin" src="/uploads/logo.png" /></h3>
+            
+            <p class="p1">
+                Politique de confidentialité - Accord utilisateur - Qui
+                sommes-nous ? - Contact
+            </p>
+            <p class="p2">Genshin Impact site e-commerce@</p>
+</footer>
 {% endblock %}
