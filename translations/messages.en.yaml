@@ -14,3 +14,22 @@ product:
   addCart: Product added to your shopping list.
   update: Product modified.
   delete: Product removed.
+
+page :
+  accueil: Home
+  shoppinglist: Shopping List
+  profile: Account
+  welcome: Welcome
+  signin: Sign in
+  password: Password
+  disconnecte: Disconnect
+  createOne: Create One
+  noAccount: Don't have an account
+  footer:
+    a: Privacy Policy - User Agreement - Who are we ? - Contact
+    b: Genshin Impact E-Commerce platform
+  account:
+    firstname: Firstname
+    name: Lastname
+    createdAt: Creation date
+    update: Change my informations

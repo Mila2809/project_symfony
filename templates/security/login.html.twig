@@ -9,10 +9,10 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
         <form method="post">
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 font-weight-normal">{{ 'page.signin'|trans }}</h1>
             <label for="username">Email</label>
             <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-            <label for="password">Password</label>
+            <label for="password">{{ 'page.password'|trans }}</label>
             <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
 
             <input type="hidden" name="_csrf_token"
@@ -20,9 +20,9 @@
             >
 
             <button class="btn btn-lg btn-primary" type="submit">
-                Sign in
+                {{ 'page.signin'|trans }}
             </button>
         </form>
-        <h2>Don't have an account ? <a href="{{ path('app_utilisateur_new')}}">Create one here</a></h2>
+        <h2>{{ 'page.noAccount'|trans }} ? <a href="{{ path('app_utilisateur_new')}}">{{ 'page.createOne'|trans }}</a></h2>
         </div>
 {% endblock %}

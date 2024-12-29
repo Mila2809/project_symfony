@@ -9,35 +9,35 @@
 <header>
         <img src="/uploads/logo.png" alt="">
         <nav class="navigation">
-            <a href="{{ path('app_produit_all') }}" class="nav-link">Accueil</a>
-            <a href="{{ path('app_commandes_all') }}" class="nav-link">Panier</a>
-            <a href="{{ path('app_account') }}" class="nav-link">Compte</a>
+            <a href="{{ path('app_produit_all') }}" class="nav-link">{{ 'page.accueil'|trans }}</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">{{ 'page.shoppinglist'|trans }}</a>
+            <a href="{{ path('app_account') }}" class="nav-link">{{ 'page.profile'|trans }}</a>
         </nav>
 </header>
     <div class="container">
     {% if app.user %}
         <div class="account-info">
-            <h1 class="titre">Bienvenue, {{ app.user.prenom }} {{ app.user.nom }}</h1>
+            <h1 class="titre">{{ 'page.welcome'|trans }}, {{ app.user.prenom }} {{ app.user.nom }}</h1>
             <hr>
             <div class="groupe">
                 <div class="info-item">
-                    <strong>Prénom :</strong> {{ app.user.prenom }}
+                    <strong>{{ 'page.account.firstname'|trans }} : </strong> {{ app.user.prenom }}
                 </div>
                 <div class="info-item">
-                    <strong>Nom :</strong> {{ app.user.nom }}
+                    <strong>{{ 'page.account.name'|trans }} : </strong> {{ app.user.nom }}
                 </div>
                 <div class="info-item">
-                    <strong>Email :</strong> {{ app.user.userIdentifier }}
+                    <strong>Email : </strong> {{ app.user.userIdentifier }}
                 </div>
                 <div class="info-item">
-                    <strong>Date de création :</strong> {{ app.user.createdAt.format('Y-m-d H:i:s') }}
+                    <strong>{{ 'page.account.createdAt'|trans }} : </strong> {{ app.user.createdAt.format('H:i - d/m/Y') }}
                 </div>
-                <a class="btn" href="{{ path('app_logout') }}"><button>Se déconnecter</button></a>
+                <a class="btn" href="{{ path('app_logout') }}"><button>{{ 'page.disconnecte'|trans }}</button></a>
             </div>
         </div>
 
         <div class="actions">
-            <h2 class="titre">Modifier mon profil</h2>
+            <h2 class="titre">{{ 'page.account.update'|trans }}</h2>
             <hr>
             <div class="groupe">
                 {{ include('utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
@@ -58,9 +58,8 @@
             <h3><img class="fin" src="/uploads/logo.png" /></h3>
             
             <p class="p1">
-                Politique de confidentialité - Accord utilisateur - Qui
-                sommes-nous ? - Contact
+                {{ 'page.footer.a'|trans }}
             </p>
-            <p class="p2">Genshin Impact site e-commerce@</p>
+            <p class="p2">{{ 'page.footer.b'|trans }}</p>
 </footer>
 {% endblock %}
