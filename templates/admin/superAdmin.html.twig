@@ -3,19 +3,34 @@
 {% block title %}SUPER ADMIN{% endblock %}
 
 {% block body %}
-    <h1>PAGE SUPER ADMIN SUPER SECRETE</h1>
+    <link rel="stylesheet" href="{{ asset('styles/superAdmin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <header>
+        <img src="/uploads/logo.png" alt="logo">
+        <nav class="navigation">
+            <a href="{{ path('app_produit_all') }}" class="nav-link">{{ 'page.accueil'|trans }}</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">{{ 'page.shoppinglist'|trans }}</a>
+            <a href="{{ path('app_account') }}" class="nav-link">{{ 'page.profile'|trans }}</a>
+            {% if app.user.roles[0] == "ROLE_SUPER_ADMIN" %}
+            <a href="{{ path('app_super_admin') }}" class="nav-link">Super Admin</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+    <h1>SUPER ADMIN</h1>
+    <div>
 
-    <h2>Liste des utilisateur</h2>
+    <h2>{{ 'page.userList'|trans }}</h2>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
+                <th>{{ 'page.firstname'|trans }}</th>
+                <th>{{ 'page.name'|trans }}</th>
                 <th>Email</th>
-                <th>Roles</th>
-                <th>Création du compte</th>
-                <th>actions</th>
+                <th>{{ 'page.roles'|trans }}</th>
+                <th>{{ 'page.createdAt'|trans }}</th>
+                <th>{{ 'page.action'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +43,8 @@
                 <td>{{ utilisateur.roles ? utilisateur.roles[0]|json_encode : '' }}</td>
                 <td>{{ utilisateur.createdAt.format('d m Y') }} - {{ utilisateur.createdAt.format('H:i') }}</td>
                 <td>
-                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
-                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">{{ 'page.show'|trans }}</a>
+                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">{{ 'page.update'|trans }}</a>
                 </td>
             </tr>
         {% else %}
@@ -39,14 +54,15 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <h2>Liste des paniers en cours</h2>
+    </div>
+    <div>
+    <h2>{{ 'page.commandesList'|trans }}</h2>
 
     <table class="table">
             <thead>
                 <tr>
-                    <th>Identifiant du panier</th>
-                    <th>Utilisateur</th>
+                    <th>{{ 'page.commandesId'|trans }}</th>
+                    <th>{{ 'page.user'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +71,7 @@
                     <td>{{ panier.id }}</td>
                     <td>{{ panier.utilisateur.prenom }} {{ panier.utilisateur.nom }}</td>
                     <td>
-                        <a href="{{ path('app_commandes_show', {'id': panier.id}) }}">Voir détail</a>
+                        <a href="{{ path('app_commandes_show', {'id': panier.id}) }}">{{ 'page.seemore'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
@@ -65,5 +81,6 @@
             {% endfor %}
             </tbody>
         </table>
-
+    </div>
+    </main>
 {% endblock %}

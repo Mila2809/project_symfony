@@ -28,8 +28,14 @@ page :
   footer:
     a: Privacy Policy - User Agreement - Who are we ? - Contact
     b: Genshin Impact E-Commerce platform
-  account:
-    firstname: Firstname
-    name: Lastname
-    createdAt: Creation date
-    update: Change my informations
+  firstname: Firstname
+  name: Lastname
+  createdAt: Creation date
+  update: Change my informations
+  userList: User List
+  roles: Role
+  action: Actions
+  commandesList: List of shopping-list
+  commandesId: Shopping-list ID
+  user: User
+  seemore: See more
