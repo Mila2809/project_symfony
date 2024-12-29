@@ -3,6 +3,8 @@
 {% block title %}Account{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+    <div class="groupe">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -26,7 +28,7 @@
             {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
         {% else %}
             <form method="post">
-                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <h1>Please sign in</h1>
                 <label for="username">Email</label>
                 <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
                 <label for="password">Password</label>
@@ -36,10 +38,11 @@
                     value="{{ csrf_token('authenticate') }}"
                 >
 
-                <button class="btn btn-lg btn-primary" type="submit">
+                <button type="submit">
                     Sign in
                 </button>
             </form>
             <h2>Don't have an account ? <a href="{{ path('app_utilisateur_new')}}">Create one here</a></h2>
     {% endif %}
+    </div>
 {% endblock %}
