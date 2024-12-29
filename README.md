@@ -1,3 +1,3 @@
 Rendu Symfony de :
 - Mila PAOUNOV
-- Aldric VENDAS
+- Aldrick VENDAS
