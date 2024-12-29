@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("/uploads/185d4a15c1a079a933ee0c5412d6dc00.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.h1 {
+    display: flex;
+    justify-content: center;
+}
+h1 {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff54;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 2em;
+    margin: 115px 30px 0px 30px;
+    width: fit-content;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-card {
+    background-color: rgba(229, 229, 229, 0.706);
+    border: 1px solid #ffffffaf;
+    background-color: #ffffff54;
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 250px; /* Largeur de la carte */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, #1d329d, #78c0ed);
+    background-size: cover;
+}
+img {
+    width: 200px;
+}
+
+.product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.product-description {
+    font-size: 14px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #537ca7;
+    margin: 0;
+}
+
+.product-stock {
+    font-size: 14px;
+    color: #5aa86c;
+    margin: 0;
+}
+
+.product-link {
+    margin-top: auto;
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #537ca7;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.product-link:hover {
+    background-color: #6597cc;
+}
+
+.no-products {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+    margin: 20px;
+}

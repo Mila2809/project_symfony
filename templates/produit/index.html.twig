@@ -4,41 +4,64 @@
 
 {% block title %}Produit{% endblock %}
 
-{% block body %}
-    <link rel="stylesheet" href="{{ asset('styles/aceuil.css') }}">
-    <h1>Produit index</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/accueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/all.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Photo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td><img src='{{ asset("uploads/" ~ produit.photo )}}'/><td>
-                    <a href="{{ path('app_produit_selected', {'id': produit.id}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block body %}
+    <header>
+        <img src="/uploads/logo.png" alt="">
+        <nav class="navigation">
+            <a href="{{ path('app_utilisateur_index') }}" class="nav-link">Accueil</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">Panier</a>
+            <a href="{{ path('app_account') }}" class="nav-link">Compte</a>
+        </nav>
+    </header>
+    <div class="h1"><h1>Bienvenue à tous, profitez bien de nos produits</h1></div>
+    
+
+<div class="product-grid">
+    {% for produit in produits %}
+        <div class="product-card">
+        <div  class="product-image">
+        <img src="{{ asset('uploads/' ~ produit.photo) }}" alt="{{ produit.nom }}">
+        </div>
+            
+            <div class="product-info">
+                <h2 class="product-name">{{ produit.nom }}</h2>
+                <hr>
+                <p class="product-description">{{ produit.description }}</p>
+                <p class="product-price">Prix : {{ produit.prix }} €</p>
+                <p class="product-stock">Stock : {{ produit.stock }}</p>
+                <a href="{{ path('app_produit_selected', {'id': produit.id}) }}" class="product-link">Voir le produit</a>
+            </div>
+        </div>
+    {% else %}
+        <p class="no-products">Aucun produit trouvé</p>
+    {% endfor %}
+</div>
 
     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
         <a href="{{ path('app_produit_new') }}">Ajouter un produit</a>
     {% endif %}
+    <footer>
+            <div class="reseaux">
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-tiktok"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <hr/>
+            
+            <h3><img class="fin" src="/uploads/logo.png" /></h3>
+            
+            <p class="p1">
+                Politique de confidentialité - Accord utilisateur - Qui
+                sommes-nous ? - Contact
+            </p>
+            <p class="p2">Genshin Impact site e-commerce@</p>
+    </footer>
 {% endblock %}
