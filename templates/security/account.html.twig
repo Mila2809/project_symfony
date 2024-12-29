@@ -4,25 +4,28 @@
 
 {% block body %}
 
-    {% if app.user %}
+    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+    <div class="groupe">
+      {% if app.user %}
 
-    <h1>Welcome {{ app.user.prenom }} {{ app.user.nom }}</h1>
-    <p>Id : {{ app.user.id }}</p>
-    <p>Prenom : {{ app.user.prenom }}</p>
-    <p>Nom : {{ app.user.nom }}</p>
-    <p>Email : {{ app.user.userIdentifier }}</p>
-    <p>Mot de Passe : {{ app.user.password }}</p>
-    <p>Date de creation : {{ app.user.createdAt.format('Y-m-d H:i:s') }}</p>
-    {% for roles in app.user.roles %}
-        <p>Roles : {{ roles }}</p>
-    {% endfor %}
+        <h1>Welcome {{ app.user.prenom }} {{ app.user.nom }}</h1>
+        <p>Id : {{ app.user.id }}</p>
+        <p>Prenom : {{ app.user.prenom }}</p>
+        <p>Nom : {{ app.user.nom }}</p>
+        <p>Email : {{ app.user.userIdentifier }}</p>
+        <p>Mot de Passe : {{ app.user.password }}</p>
+        <p>Date de creation : {{ app.user.createdAt.format('Y-m-d H:i:s') }}</p>
+        {% for roles in app.user.roles %}
+            <p>Roles : {{ roles }}</p>
+        {% endfor %}
 
-    <h2>Log out</h2>
-    <a href="{{ path('app_logout') }}"><button>Logout</button></a>
+        <h2>Log out</h2>
+        <a href="{{ path('app_logout') }}"><button>Logout</button></a>
 
-    <h2>Edit Profil</h2>
-    {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
+        <h2>Edit Profil</h2>
+        {{ include('utilisateur/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {% endif %}
+      {% endif %}
+    </div>
 
 {% endblock %}
