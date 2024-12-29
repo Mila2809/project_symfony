@@ -3,7 +3,6 @@
 {% block title %}All Commandes{% endblock %}
 
 {% block body %}
-    {% if app.user.id == commandes.utilisateur.id %}
         <h1>Vos Commandes</h1>
 
         <table class="table">
@@ -14,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for commande in commandes %}
+            {% for commande in commandes|reverse %}
                 <tr>
                     <td>{{ commande.id }}</td>
                     <td>{{ commande.dateachat ? commande.dateachat|json_encode : 'Panier non payé' }}</td>
@@ -29,7 +28,4 @@
             {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <h1>ACCES NON AUTORISE</h1>
-    {% endif %}
 {% endblock %}
