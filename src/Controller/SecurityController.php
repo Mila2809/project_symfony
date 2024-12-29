@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 
@@ -15,11 +16,11 @@ use App\Form\UtilisateurType;
 class SecurityController extends AbstractController
 {
 
-    #region Account
+    #region Log in
 
     // Connexion à un compte
     #[Route(path: '/login', name: 'app_login' )]
-    public function login(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Récupération d'une erreur de connexion
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -37,6 +38,9 @@ class SecurityController extends AbstractController
             // Envoie du formulaire à la BDD
             $entityManager->persist($utilisateur);
             $entityManager->flush();
+
+            // Message flash
+            $this->addFlash('success', $translator->trans('account.login'));
 
             // Redirection vers la page
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
@@ -89,8 +93,10 @@ class SecurityController extends AbstractController
 
     // Chemin de déconnexion
     #[Route(path: '/logout', name: 'app_logout')]
-    public function logout(): void
+    public function logout(TranslatorInterface $translator): void
     {
+        // Message flash
+        $this->addFlash('success', $translator->trans('account.logout'));
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 

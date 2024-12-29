@@ -15,6 +15,7 @@ use App\Form\ProduitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 // Controller lié aux pages des produits
 #[Route('/produit')]
@@ -25,7 +26,7 @@ class ProduitController extends AbstractController
     
     // Création d'un produit
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
-    public function new(EntityManagerInterface $em, Request $request): Response
+    public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
     {
         // Création du formulaire
         $produit = new Produit();
@@ -58,6 +59,9 @@ class ProduitController extends AbstractController
             // Envoie du formulaire à la BDD
             $em->persist($produit);
             $em->flush();
+
+            // Message flash
+            $this->addFlash('success', $translator->trans('product.created'));
 
             // Redirection vers la page
             return $this->redirectToRoute('app_produit_all');
@@ -93,7 +97,7 @@ class ProduitController extends AbstractController
 
     // Affichage des détails d'un produit et ajout au panier
     #[Route('/show/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
-    public function selected(EntityManagerInterface $em, Request $request, Produit $produit): Response
+    public function selected(EntityManagerInterface $em, Request $request, Produit $produit, TranslatorInterface $translator): Response
     {
         // Récupération de l'utilisateur
         $user = $this->getUser();
@@ -156,6 +160,10 @@ class ProduitController extends AbstractController
                 $em->persist($contenuPanier);
                 $em->flush();
             }
+
+            // Message flash
+            $this->addFlash('success', $translator->trans('product.addCart'));
+
             // Redirection vers la page
             return $this->redirectToRoute('app_produit_all');
         }
@@ -175,7 +183,7 @@ class ProduitController extends AbstractController
 
     // Modification d'un produit
     #[Route('/edit/{id}', name: 'app_produit_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Création du formulaire
         $form = $this->createForm(ProduitType::class, $produit);
@@ -209,6 +217,9 @@ class ProduitController extends AbstractController
             // Envoie du formulaire à la BDD
             $entityManager->flush();
 
+            // Message flash
+            $this->addFlash('success', $translator->trans('product.update'));
+
             // Redirection vers la page
             return $this->redirectToRoute('app_produit_selected', ['id' => $produit->getId()]);
         }
@@ -228,13 +239,16 @@ class ProduitController extends AbstractController
 
     // Chemin de suppression d'un produit
     #[Route('/delete/{id}', name: 'app_produit_delete', methods: ['POST'])]
-    public function delete(Request $request, EntityManagerInterface $em, Produit $produit): Response
+    public function delete(Request $request, EntityManagerInterface $em, Produit $produit, TranslatorInterface $translator): Response
     {
         // Suppression du produit
         if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->request->get('csrf'))) {
             $em->remove($produit);
             $em->flush();
         }
+
+        // Message flash
+        $this->addFlash('success', $translator->trans('product.delete'));
 
         // Redirection vers la page
         return $this->redirectToRoute('app_produit_all');

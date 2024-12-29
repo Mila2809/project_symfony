@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
@@ -21,7 +22,7 @@ final class UtilisateurController extends AbstractController
 
     // Création d'un utilisateur
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Création du formulaire
         $utilisateur = new Utilisateur();
@@ -40,6 +41,8 @@ final class UtilisateurController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
+            // Message flash
+            $this->addFlash('success', $translator->trans('account.created'));
             // Redirection vers la page
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -91,7 +94,7 @@ final class UtilisateurController extends AbstractController
 
     // Modification d'un utilisateur
     #[Route('/{id}/edit', name: 'app_utilisateur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Création du formulaire
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
@@ -101,6 +104,9 @@ final class UtilisateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Envoie du formulaire à la BDD
             $entityManager->flush();
+
+            // Message flash
+            $this->addFlash('success', $translator->trans('account.update'));
 
             // Redirection vers la page
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
@@ -121,13 +127,16 @@ final class UtilisateurController extends AbstractController
 
     // Chemin de suppression d'un utilisateur
     #[Route('/{id}', name: 'app_utilisateur_delete', methods: ['POST'])]
-    public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Suppression de l'utilisateur
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($utilisateur);
             $entityManager->flush();
         }
+
+        // Message flash
+        $this->addFlash('success', $translator->trans('account.delete'));
 
         // Redirection vers la page
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
