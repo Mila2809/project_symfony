@@ -1,16 +1,16 @@
 account:
-  created: Account succesfully created !
-  login: Connexion succes !
-  logout: Loged out.
-  update: Account modified !
-  delete: Account removed.
+  created: Compte créé.
+  login: Connexion réussi !
+  logout: Vous avez été déconnecté.
+  update: Information du compte modifié.
+  delete: Compte supprimé.
 
 commandes:
-  payement: Thank you for your purchase !
-  suppression: Product removed from your shopping list.
+  payement: Merci pour vos achats !
+  suppression: Produit supprimé de votre liste.
 
 product:
-  created: Product created !
-  addCart: Product added to card !
-  update: Product modified.
-  delete: Product removed.
+  created: Produit créé.
+  addCart: Produit ajouté au panier !
+  update: Produit modifié.
+  delete: Produit supprimé.
