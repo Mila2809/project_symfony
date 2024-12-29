@@ -39,3 +39,10 @@ page :
   commandesId: Shopping-list ID
   user: User
   seemore: See more
+  yourShoppinList: Your Shopping List
+  shoppingList: Shopping List
+  product: Product
+  productPrice: Product Price
+  productQuantity: Product Quantity
+  totalToBuy: Total to buy
+  buyDate: Buy Date

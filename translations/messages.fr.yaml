@@ -39,3 +39,10 @@ page :
   commandesId: Identifiant des paniers
   user: Utilisateur
   seemore: Voir plus
+  yourShoppinList: Vos panier
+  shoppingList: Votre panier
+  product: Produit
+  productPrice: Prix du produit
+  productQuantity: Quantité
+  totalToBuy: Total à payer
+  buyDate: Date d'achat

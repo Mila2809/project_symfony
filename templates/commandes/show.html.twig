@@ -3,19 +3,33 @@
 {% block title %}Commande{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset('styles/commandes.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <header>
+        <img src="/uploads/logo.png" alt="logo">
+        <nav class="navigation">
+            <a href="{{ path('app_produit_all') }}" class="nav-link">{{ 'page.accueil'|trans }}</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">{{ 'page.shoppinglist'|trans }}</a>
+            <a href="{{ path('app_account') }}" class="nav-link">{{ 'page.profile'|trans }}</a>
+            {% if app.user.roles[0] == "ROLE_SUPER_ADMIN" %}
+            <a href="{{ path('app_super_admin') }}" class="nav-link">Super Admin</a>
+            {% endif %}
+        </nav>
+    </header>
     {% if app.user.id == commandes.utilisateur.id or is_granted('ROLE_SUPER_ADMIN') %}
-        <h1>Votre Commande</h1>
+    <main>
+        <h1>{{ 'page.yourShoppingList'|trans }}</h1>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>Commande</th>
-                    <th>Produit</th>
-                    <th>Prix du produit</th>
-                    <th>Quantité</th>
+                    <th>{{ 'page.shoppingList'|trans }}</th>
+                    <th>{{ 'page.product'|trans }}</th>
+                    <th>{{ 'page.productPrice'|trans }}</th>
+                    <th>{{ 'page.productQuantity'|trans }}</th>
                     <th>Total</th>
                     {% if not commandes.dateachat %}
-                        <th>Supprimer</th>
+                        <th>{{ 'page.delete'|trans }}</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -31,7 +45,7 @@
                         <td>
                             <form method="post" action="{{ path('app_commandes_delete', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                 <input type="hidden" name="csrf" value="{{ csrf_token('delete' ~ produit.id) }}">
-                                <button type="submit">Supprimer</button>
+                                <button type="submit">{{ 'page.delete'|trans }}</button>
                             </form>
                         </td>
                     {% endif %}
@@ -39,14 +53,32 @@
             {% endfor %}
             </tbody>
         </table>
-        <p>Total à payer : {{ total }}</p>
+        <p>{{ 'page.totalToBuy'|trans }} : {{ total }}</p>
 
         {% if commandes.dateachat %}
-            <p>Cette commande a été payé le {{ commandes.dateachat.format('d-m-Y') }} à {{ commandes.dateachat.format('H:i') }} .</p>
+            <p>{{ 'page.buyDate'|trans }} : {{ commandes.dateachat.format('d-m-Y') }} {{ commandes.dateachat.format('H:i') }} .</p>
         {% else %}
             {{ form(form) }}
         {% endif %}
     {% else %}
         <h1>ACCES NON AUTORISE</h1>
     {% endif %}
+    </main>
+        <footer>
+            <div class="reseaux">
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-tiktok"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <hr/>
+            
+            <h3><img class="fin" src="/uploads/logo.png" /></h3>
+            
+            <p class="p1">
+                {{ 'page.footer.a'|trans }}
+            </p>
+            <p class="p2">{{ 'page.footer.b'|trans }}</p>
+</footer>
 {% endblock %}
