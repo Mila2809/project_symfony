@@ -9,14 +9,17 @@
 {% endblock %}
 
 {% block body %}
-    <header>
-        <img src="/uploads/logo.png" alt="">
+<header>
+        <img src="/uploads/logo.png" alt="logo">
         <nav class="navigation">
-            <a href="{{ path('app_utilisateur_index') }}" class="nav-link">Accueil</a>
-            <a href="{{ path('app_commandes_all') }}" class="nav-link">Panier</a>
-            <a href="{{ path('app_account') }}" class="nav-link">Compte</a>
+            <a href="{{ path('app_produit_all') }}" class="nav-link">{{ 'page.accueil'|trans }}</a>
+            <a href="{{ path('app_commandes_all') }}" class="nav-link">{{ 'page.shoppinglist'|trans }}</a>
+            <a href="{{ path('app_account') }}" class="nav-link">{{ 'page.profile'|trans }}</a>
+            {% if app.user.roles[0] == "ROLE_SUPER_ADMIN" %}
+            <a href="{{ path('app_super_admin') }}" class="nav-link">Super Admin</a>
+            {% endif %}
         </nav>
-    </header>
+</header>
     <div class="h1"><h1>Informations sur le produit</h1></div>
     <div class="product-details">
         <div class="product-image-container">

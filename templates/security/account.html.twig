@@ -2,10 +2,13 @@
 
 {% block title %}Mon Compte{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/account.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/all.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+
 {% block body %}
-<link rel="stylesheet" href="{{ asset('styles/account.css') }}">
-<link rel="stylesheet" href="{{ asset('styles/all.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 <header>
         <img src="/uploads/logo.png" alt="logo">
         <nav class="navigation">
@@ -24,23 +27,23 @@
             <hr>
             <div class="groupe">
                 <div class="info-item">
-                    <strong>{{ 'page.account.firstname'|trans }} : </strong> {{ app.user.prenom }}
+                    <strong>{{ 'page.firstname'|trans }} : </strong> {{ app.user.prenom }}
                 </div>
                 <div class="info-item">
-                    <strong>{{ 'page.account.name'|trans }} : </strong> {{ app.user.nom }}
+                    <strong>{{ 'page.name'|trans }} : </strong> {{ app.user.nom }}
                 </div>
                 <div class="info-item">
                     <strong>Email : </strong> {{ app.user.userIdentifier }}
                 </div>
                 <div class="info-item">
-                    <strong>{{ 'page.account.createdAt'|trans }} : </strong> {{ app.user.createdAt.format('H:i - d/m/Y') }}
+                    <strong>{{ 'page.createdAt'|trans }} : </strong> {{ app.user.createdAt.format('H:i - d/m/Y') }}
                 </div>
                 <a class="btn" href="{{ path('app_logout') }}"><button>{{ 'page.disconnecte'|trans }}</button></a>
             </div>
         </div>
 
         <div class="actions">
-            <h2 class="titre">{{ 'page.account.update'|trans }}</h2>
+            <h2 class="titre">{{ 'page.update'|trans }}</h2>
             <hr>
             <div class="groupe">
                 {{ include('utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}

@@ -64,6 +64,11 @@ class SecurityController extends AbstractController
     #[Route(path: '/account', name: 'app_account', methods: ['GET', 'POST'] )]
     public function account(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        // Vérification si l'utilisateur est connecté
+        $user = $this->getUser();
+        if(!$user) {
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
         // Création du formulaire
         $utilisateur = $this->getUser();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
