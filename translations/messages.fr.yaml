@@ -19,7 +19,7 @@ page :
   accueil: Accueil
   shoppinglist: Panier
   profile: Compte
-  welcome: Bienvenu
+  welcome: Bienvenue
   signin: S'inscrire
   password: Mot de passe
   disconnecte: Se déconnecter
@@ -28,8 +28,14 @@ page :
   footer:
     a: Politique de confidentialité - Information utilisateur - Qui somme nous ? - Contact
     b: Plateforme de E-Commerce Genshin Impact
-  account:
-    firstname: Prénom
-    name: Nom
-    createdAt: Date de création
-    update: Modifier mon profil
+  firstname: Prénom
+  name: Nom
+  createdAt: Date de création
+  update: Modifier mon profil
+  userList: Liste des utilisateur
+  roles: Role
+  action: Action
+  commandesList: Liste des paniers
+  commandesId: Identifiant des paniers
+  user: Utilisateur
+  seemore: Voir plus
