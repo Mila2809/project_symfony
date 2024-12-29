@@ -18,18 +18,18 @@
     </header>
     {% if app.user.id == commandes.utilisateur.id or is_granted('ROLE_SUPER_ADMIN') %}
     <main>
-        <h1>Votre Commande</h1>
+        <h1>{{ 'page.yourShoppingList'|trans }}</h1>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>Commande</th>
-                    <th>Produit</th>
-                    <th>Prix du produit</th>
-                    <th>Quantité</th>
+                    <th>{{ 'page.shoppingList'|trans }}</th>
+                    <th>{{ 'page.product'|trans }}</th>
+                    <th>{{ 'page.productPrice'|trans }}</th>
+                    <th>{{ 'page.productQuantity'|trans }}</th>
                     <th>Total</th>
                     {% if not commandes.dateachat %}
-                        <th>Supprimer</th>
+                        <th>{{ 'page.delete'|trans }}</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -45,7 +45,7 @@
                         <td>
                             <form method="post" action="{{ path('app_commandes_delete', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                 <input type="hidden" name="csrf" value="{{ csrf_token('delete' ~ produit.id) }}">
-                                <button type="submit">Supprimer</button>
+                                <button type="submit">{{ 'page.delete'|trans }}</button>
                             </form>
                         </td>
                     {% endif %}
@@ -53,10 +53,10 @@
             {% endfor %}
             </tbody>
         </table>
-        <p>Total à payer : {{ total }}</p>
+        <p>{{ 'page.totalToBuy'|trans }} : {{ total }}</p>
 
         {% if commandes.dateachat %}
-            <p>Cette commande a été payé le {{ commandes.dateachat.format('d-m-Y') }} à {{ commandes.dateachat.format('H:i') }} .</p>
+            <p>{{ 'page.buyDate'|trans }} : {{ commandes.dateachat.format('d-m-Y') }} {{ commandes.dateachat.format('H:i') }} .</p>
         {% else %}
             {{ form(form) }}
         {% endif %}
