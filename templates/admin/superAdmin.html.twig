@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for utilisateur in utilisateurs %}
+        {% for utilisateur in utilisateurs|reverse %}
             <tr>
                 <td>{{ utilisateur.id }}</td>
                 <td>{{ utilisateur.nom }}</td>
