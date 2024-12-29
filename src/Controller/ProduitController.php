@@ -18,14 +18,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 // Controller lié aux pages des produits
-#[Route('/produit')]
+
 class ProduitController extends AbstractController
 {
 
     #region Create
     
     // Création d'un produit
-    #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
+    #[Route('/produit/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
     {
         // Création du formulaire
@@ -80,7 +80,7 @@ class ProduitController extends AbstractController
     #region Read All
 
     // Affichage de la liste des produits
-    #[Route('/all', name: 'app_produit_all', methods: ['GET'])]
+    #[Route('/', name: 'app_produit_all', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
         // Redirection vers la page
@@ -96,7 +96,7 @@ class ProduitController extends AbstractController
     #region Read One
 
     // Affichage des détails d'un produit et ajout au panier
-    #[Route('/show/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
+    #[Route('/produit/show/{id}', name: 'app_produit_selected', methods: ['GET', 'POST'])]
     public function selected(EntityManagerInterface $em, Request $request, Produit $produit, TranslatorInterface $translator): Response
     {
         // Récupération de l'utilisateur
@@ -182,7 +182,7 @@ class ProduitController extends AbstractController
     #region Update
 
     // Modification d'un produit
-    #[Route('/edit/{id}', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    #[Route('/produit/edit/{id}', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         // Création du formulaire
@@ -238,7 +238,7 @@ class ProduitController extends AbstractController
     #region Delete
 
     // Chemin de suppression d'un produit
-    #[Route('/delete/{id}', name: 'app_produit_delete', methods: ['POST'])]
+    #[Route('/produit/delete/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $em, Produit $produit, TranslatorInterface $translator): Response
     {
         // Suppression du produit
