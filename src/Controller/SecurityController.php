@@ -17,9 +17,9 @@ class SecurityController extends AbstractController
 
     #region Account
 
-    // Login et affichage des informations du compte
-    #[Route(path: '/account', name: 'app_account' )]
-    public function account(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager): Response
+    // Connexion à un compte
+    #[Route(path: '/login', name: 'app_login' )]
+    public function login(AuthenticationUtils $authenticationUtils, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Récupération d'une erreur de connexion
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -39,13 +39,44 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             // Redirection vers la page
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+        }
+
+        // Redirection vers la page
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'form' => $form,
+        ]);
+    }
+
+    #endregion
+
+
+
+    #region Account
+
+    // Affichage des informations du compte
+    #[Route(path: '/account', name: 'app_account' )]
+    public function account(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Création du formulaire pour modifié les informations de son compte
+        $utilisateur = new Utilisateur();
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form->handleRequest($request);
+
+        // Envoie du formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Envoie du formulaire à la BDD
+            $entityManager->persist($utilisateur);
+            $entityManager->flush();
+
+            // Redirection vers la page
+            return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
 
         // Redirection vers la page
         return $this->render('security/account.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
             'form' => $form,
         ]);
     }
