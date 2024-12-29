@@ -1,9 +1,9 @@
 account:
-  created: Account succesfully created !
-  login: Connexion succes !
-  logout: Loged out.
-  update: Account modified !
-  delete: Account removed.
+  created: Account created !
+  login: You have been connected !
+  logout: You have been disconnected.
+  update: You have modified your account information.
+  delete: Account deleted.
 
 commandes:
   payement: Thank you for your purchase !
@@ -11,6 +11,6 @@ commandes:
 
 product:
   created: Product created !
-  addCart: Product added to card !
+  addCart: Product added to your shopping list.
   update: Product modified.
   delete: Product removed.
