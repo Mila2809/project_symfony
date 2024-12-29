@@ -61,19 +61,21 @@ class SecurityController extends AbstractController
     #region Account
 
     // Affichage des informations du compte
-    #[Route(path: '/account', name: 'app_account' )]
-    public function account(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route(path: '/account', name: 'app_account', methods: ['GET', 'POST'] )]
+    public function account(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-        // Création du formulaire pour modifié les informations de son compte
-        $utilisateur = new Utilisateur();
+        // Création du formulaire
+        $utilisateur = $this->getUser();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         // Envoie du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
             // Envoie du formulaire à la BDD
-            $entityManager->persist($utilisateur);
             $entityManager->flush();
+
+            // Message flash
+            $this->addFlash('success', $translator->trans('account.update'));
 
             // Redirection vers la page
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
