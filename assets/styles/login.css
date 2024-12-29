@@ -7,7 +7,6 @@ body {
     margin: 0;
     padding: 0;
     background-image: url("/uploads/897653e6fd5502773cddf0db7f93d2d0.jpg");
-    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,6 +63,7 @@ button {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: fit-content;
 }
 
 button:hover {
