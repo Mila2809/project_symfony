@@ -14,3 +14,22 @@ product:
   addCart: Produit ajouté au panier !
   update: Produit modifié.
   delete: Produit supprimé.
+
+page :
+  accueil: Accueil
+  shoppinglist: Panier
+  profile: Compte
+  welcome: Bienvenu
+  signin: S'inscrire
+  password: Mot de passe
+  disconnecte: Se déconnecter
+  createOne: Créez-un
+  noAccount: Vous n'avez pas de compte
+  footer:
+    a: Politique de confidentialité - Information utilisateur - Qui somme nous ? - Contact
+    b: Plateforme de E-Commerce Genshin Impact
+  account:
+    firstname: Prénom
+    name: Nom
+    createdAt: Date de création
+    update: Modifier mon profil
