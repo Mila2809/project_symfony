@@ -1,0 +1,16 @@
+account:
+  created: Account succesfully created !
+  login: Connexion succes !
+  logout: Loged out.
+  update: Account modified !
+  delete: Account removed.
+
+commandes:
+  payement: Thank you for your purchase !
+  suppression: Product removed from your shopping list.
+
+product:
+  created: Product created !
+  addCart: Product added to card !
+  update: Product modified.
+  delete: Product removed.

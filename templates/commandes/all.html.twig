@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Commandes{% endblock %}
+
+{% block body %}
+    {% if app.user.id == commandes.utilisateur.id %}
+        <h1>Vos Commandes</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.dateachat ? commande.dateachat|json_encode : 'Panier non payé' }}</td>
+                    <td>
+                        <a href="{{ path('app_commandes_show', {'id': commande.id}) }}">Voir détail</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h1>ACCES NON AUTORISE</h1>
+    {% endif %}
+{% endblock %}

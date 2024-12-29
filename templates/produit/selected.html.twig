@@ -30,16 +30,19 @@
         </tbody>
     </table>
 
-    <button>panier</button>
     <a href="{{ path('app_produit_all') }}">back to accueil</a>
 
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')%}
     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-warning">Modifier</a>
 
     <form method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
         <input type="hidden" name="csrf" value="{{ csrf_token('delete' ~ produit.id) }}">
         <button type="submit">Supprimer</button>
     </form>
+    {% endif %}
 
-    
+    <h2>Forme de ContenuPanier</h2>
+
+    {{ form(contenuPanierForm) }}
 
 {% endblock %}

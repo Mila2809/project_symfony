@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    {% if app.user.id == commandes.utilisateur.id or is_granted('ROLE_SUPER_ADMIN') %}
+        <h1>Votre Commande</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Commande</th>
+                    <th>Produit</th>
+                    <th>Prix du produit</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    {% if not commandes.dateachat %}
+                        <th>Supprimer</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for produit in contenuCommande %}
+                <tr>
+                    <td>{{ produit.commandes.id }}</td>
+                    <td>{{ produit.produit.nom }}</td>
+                    <td>{{ produit.produit.prix }}</td>
+                    <td>{{ produit.quantite ? produit.quantite|json_encode : '0' }}</td>
+                    <td>{{ produit.quantite * produit.produit.prix}}</td>
+                    {% if not commandes.dateachat %}
+                        <td>
+                            <form method="post" action="{{ path('app_commandes_delete', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                                <input type="hidden" name="csrf" value="{{ csrf_token('delete' ~ produit.id) }}">
+                                <button type="submit">Supprimer</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p>Total à payer : {{ total }}</p>
+
+        {% if commandes.dateachat %}
+            <p>Cette commande a été payé le {{ commandes.dateachat.format('d-m-Y') }} à {{ commandes.dateachat.format('H:i') }} .</p>
+        {% else %}
+            {{ form(form) }}
+        {% endif %}
+    {% else %}
+        <h1>ACCES NON AUTORISE</h1>
+    {% endif %}
+{% endblock %}

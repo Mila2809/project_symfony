@@ -25,12 +25,12 @@ class Commandes
     /**
      * @var Collection<int, ContenuPanier>
      */
-    #[ORM\ManyToMany(targetEntity: ContenuPanier::class, inversedBy: 'commandes')]
-    private Collection $ContenuPaniers;
+    #[ORM\OneToMany(targetEntity: ContenuPanier::class, mappedBy: 'commandes')]
+    private Collection $ContenuPanier;
 
     public function __construct()
     {
-        $this->ContenuPaniers = new ArrayCollection();
+        $this->ContenuPanier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,23 +65,29 @@ class Commandes
     /**
      * @return Collection<int, ContenuPanier>
      */
-    public function getContenuPaniers(): Collection
+    public function getContenuPanier(): Collection
     {
-        return $this->ContenuPaniers;
+        return $this->ContenuPanier;
     }
 
-    public function addContenuPanier(ContenuPanier $ContenuPanier): static
+    public function addContenuPanier(ContenuPanier $contenuPanier): static
     {
-        if (!$this->ContenuPaniers->contains($ContenuPanier)) {
-            $this->ContenuPaniers->add($ContenuPanier);
+        if (!$this->ContenuPanier->contains($contenuPanier)) {
+            $this->ContenuPanier->add($contenuPanier);
+            $contenuPanier->setCommandes($this);
         }
 
         return $this;
     }
 
-    public function removeContenuPanier(ContenuPanier $ContenuPanier): static
+    public function removeContenuPanier(ContenuPanier $contenuPanier): static
     {
-        $this->ContenuPaniers->removeElement($ContenuPanier);
+        if ($this->ContenuPanier->removeElement($contenuPanier)) {
+            // set the owning side to null (unless already changed)
+            if ($contenuPanier->getCommandes() === $this) {
+                $contenuPanier->setCommandes(null);
+            }
+        }
 
         return $this;
     }
